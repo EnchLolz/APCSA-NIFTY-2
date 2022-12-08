@@ -33,7 +33,7 @@ This is my second extra credit submission for APCSA
 ---
 
 ## How to Use
-##### Main Game
+#### Main Game
 Change user settings (lines 5-9)
 ```py
 #user settings 
@@ -50,7 +50,7 @@ win_score = 11
 
 Run the python file
 
-##### WASD Bot
+#### WASD Bot
 
 Run the python file
 
