@@ -1,7 +1,7 @@
 # APCSA NIFTY PROJECT #2
 ## 2048 GAME
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
 This is my second extra credit submission for APCSA
 
