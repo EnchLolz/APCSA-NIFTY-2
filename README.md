@@ -34,7 +34,7 @@ This is my second extra credit submission for APCSA
 
 ## How to Use
 #### Main Game
-Change user settings (lines 5-9)
+Change user settings (lines 30-34)
 ```py
 #user settings 
 FPS = 60 
