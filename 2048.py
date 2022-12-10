@@ -2,6 +2,31 @@
 import pygame
 import random
 
+#custom storage data structure
+class Storage:
+    #initializes storage
+    def __init__(self):
+        self.map = {}
+        self.list = []
+    #adds value to storage
+    def add(self, val):
+        if val in self.map:
+            return
+        self.map[val] = len(self.list)
+        self.list.append(val)
+    #removes value from storage
+    def remove(self, val):
+        if val not in self.map:
+            return
+        last = self.list[-1]
+        self.list[self.map[val]] = last
+        self.map[last] = self.map[val]
+        self.list.pop()
+        del self.map[val]
+    #returns random value from storage
+    def random(self):
+        return random.choice(self.list)
+
 #user settings
 FPS = 60
 horizontal = 4
@@ -25,7 +50,8 @@ medium_colors = ["brown2","chocolate2","goldenrod2","springgreen3","cyan3","dodg
 dark_colors = ["red2","darkorange3","darkgoldenrod3","forestgreen","cyan4","navy","#E0115F","purple4"]
 tile_colors = light_colors+medium_colors+dark_colors
 grid = [[None for i in range(horizontal)] for j in range(vertical)]
-free_tiles = {(i%horizontal,i//horizontal)for i in range(horizontal*vertical)}
+free_tiles = Storage()
+
 
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((width, height))
@@ -33,7 +59,7 @@ pygame.display.set_caption(str(1<<win_score))
 screen.fill(bg_color)
 
 #moving tile class
-class tile:
+class Tile:
     #initializes tile
     def __init__(self,val,x,y):
         self.value = val
@@ -56,12 +82,17 @@ class tile:
         else:
             return "blocked"
 
+#resets empty tiles
+def reset():
+    for i in range(horizontal):
+        for j in range(vertical):
+            free_tiles.add((i,j))
+
 #spawn new tile
 def spawn():
-    if len(free_tiles) > 0:
-        x,y = random.sample(free_tiles,1)[0]
-        free_tiles.remove((x,y))
-        grid[y][x] = tile(1 if random.random() < spawn_percent else 2,x,y)
+    x,y = free_tiles.random()
+    free_tiles.remove((x,y))
+    grid[y][x] = Tile(1 if random.random() < spawn_percent else 2,x,y)
 
 #moves tiles
 def move(direction):
@@ -260,7 +291,7 @@ def home():
     time_ticks = 0
     score = 0
     grid = [[None for i in range(horizontal)] for j in range(vertical)]
-    free_tiles = {(i%horizontal,i//horizontal)for i in range(horizontal*vertical)}
+    reset()
     while(True):
         drawgrid()
         drawheader()
